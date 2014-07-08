@@ -21,10 +21,25 @@ void hanoi(int N, int d)
 	    return;
 	}
 	hanoi( N- 1, -d );
-	std::cout<<"shift: "<<N<<"-"<<d<<std::endl;
+	std::cout<<"shift: "<<N<<" : "<<d<<std::endl;
 	hanoi( N- 1, -d );
 	
 	return;
+}
+
+int F(int i)
+{
+    if(i < 1) 
+	{
+	    return 0;
+	}
+	
+	if(i == 1)
+	{
+	    return 1;
+	}
+	
+	return F(i - 1) + F(i - 2);
 }
 
 int main(int arc, char **argv)
@@ -32,4 +47,6 @@ int main(int arc, char **argv)
     int a[] = {9, 6, 7, 2, 4, 8, 1, 3, 5, 19};
 	std::cout<<max(a, 0, sizeof(a)/sizeof(int) - 1)<<std::endl;
 	hanoi(5, 1);
+	
+	std::cout<<F(45)<<std::endl;
 }
