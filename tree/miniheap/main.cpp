@@ -15,12 +15,22 @@ return 0;
 int main(int argc, char** argv)
 {
     MiniHeap heap;
-	int value;
-	while(1)
-	{
-	cin>>value;
-	std::cout<<"33333333333\n";
-	heap.Insert(value);
-	}
+    std::string value;
+    while(1)
+    {
+        cin>>value;
+        if(value == "pop")
+        {
+            std::cout<<"pop: "<<heap.PopUp()<<std::endl;
+        }
+        else if(value == "q" || value == "quit")
+        {
+            break;
+        }
+        else
+        {
+            heap.Insert(atoi(value.c_str()));
+        }
+    }
     return 0;
 }
