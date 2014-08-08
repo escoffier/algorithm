@@ -114,14 +114,14 @@ private:
     unsigned int length_;
 };
 
-template<class T> priority_queue::priority_queue()
+template<class T> priority_queue<T>::priority_queue()
 {
-    length_ = 8
+    length_ = 8;
     buf_ = new T[length_];
     size_ = 0;
 }
 
-template<class T> priority_queue::~priority_queue()
+template<class T> priority_queue<T>::~priority_queue()
 {
     delete [] buf_;
     buf_ = 0;
@@ -129,7 +129,7 @@ template<class T> priority_queue::~priority_queue()
     size_ = 0;
 }
 
-template<class T> void priority_queue::pop()
+template<class T> void priority_queue<T>::pop()
 {
     if(size_ < 1)
     {
@@ -141,11 +141,11 @@ template<class T> void priority_queue::pop()
         size_ = 0;
     }
 
-    exchange(buf_[0], a[size_ -1]);
+    exchange(buf_[0], buf_[size_ -1]);
     maxheapify(buf_, size_ -1);
 }
 
-template<class T> void priority_queue::push(const T &value)
+template<class T> void priority_queue<T>::push(const T &value)
 {
     if(0 == size_)
     {
@@ -156,19 +156,19 @@ template<class T> void priority_queue::push(const T &value)
     heapshiftup(buf_, size_, size_ - 1, value);
 }
 
-template<class T> const T& priority_queue::top() const
+template<class T> const T& priority_queue<T>::top() const
 {
     return buf_[0];
 }
 
-template<class T> size_t priority_queue::size() const
+template<class T> size_t priority_queue<T>::size() const
 {
-    return size_
+    return size_;
 }
 
-template<class T> bool priority_queue::empty() const
+template<class T> bool priority_queue<T>::empty() const
 {
-    return ((!size_) ? false:true)
+    return ((!size_) ? false:true);
 }
 
 }

@@ -20,11 +20,11 @@ int main(int argc, char** argv)
     qqf::heapsort(a, sizeof(a)/sizeof(int));
     printarray(a, sizeof(a)/sizeof(int));
 
-    int b = {15, 13, 9, 5, 12, 8, 7, 4, 0, 6, 2, 1};
+    int b[] = {15, 13, 9, 5, 12, 8, 7, 4, 0, 6, 2, 1};
     qqf::buildheap(b, sizeof(b)/sizeof(int));
     printarray(b, sizeof(b)/sizeof(int));
     
-    qqf::priority_queue que<int>;
+    qqf::priority_queue<int> que;
     return 0;
 }
 
