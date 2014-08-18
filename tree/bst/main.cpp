@@ -6,6 +6,7 @@
  ************************************************************************/
 
 #include<iostream>
+#include<stack>
 using namespace std;
 
 struct node
@@ -99,14 +100,99 @@ bool InsertBST(node **tree, int value)
 	return true;
 }
 
+//void InorderTranverse(node *head)
+//{
+//	if(head == NULL)
+//		return;
+//	InorderTranverse(head->lchild);
+//    std::cout<<head->data<<" ";
+//	InorderTranverse(head->rchild);
+//}
+
+#if 1
+void PreorderTranverse1(node *head)
+{
+	stack<node *> s;
+	while(head != NULL || !s.empty())
+	{
+		if(head != NULL)
+		{
+			std::cout<<head->data<<" ";
+			s.push(head);
+			head = head->lchild;
+		}
+        else
+		//if(!s.empty())
+		{
+			head = s.top();
+			s.pop();
+			head = head->rchild;
+		}
+	}
+	std::cout<<std::endl;
+}
+
+
+void PreorderTranverse2(node *head)
+{
+	if(NULL == head)
+	{
+        std::cout<<"tree is empty"<<std::endl;
+		return;
+	}
+
+	stack<node*> s;
+	s.push(head);
+	while(!s.empty())
+	{
+		head = s.top();
+		std::cout<<head->data<<" ";
+
+		s.pop();
+		if(head->rchild != NULL)
+		{
+			s.push(head->rchild);
+		}
+
+		if(NULL != head->lchild)
+		{
+			s.push(head->lchild);
+		}
+	}
+
+	std::cout<<std::endl;
+}
+
 void InorderTranverse(node *head)
 {
-	if(head == NULL)
+	if(NULL == head)
+	{
+		std::cout<<"empty tree"<<std::endl;
 		return;
-	InorderTranverse(head->lchild);
-    std::cout<<head->data<<" ";
-	InorderTranverse(head->rchild);
+	}
+    stack<node*> s;
+	node* root = head;
+	while(root != NULL || !s.empty())
+	{
+		while(root != NULL)
+		{
+		    s.push(root);
+		    root = root->lchild;
+		}
+
+		if(!s.empty())
+		{
+			std::cout<<s.top()->data<<std::endl;
+			root = s.top();
+			s.pop();
+			//std::cout<<root->data<<std::endl;
+			root = root->rchild;
+		    //std::cout<<"right: "<<root<<std::endl;
+		}
+	}
 }
+#endif
+
 void printarray(int a[], int size)
 {
 	for(int i = 0; i < size; ++i)
@@ -123,8 +209,13 @@ int main(int argc, char** argv)
     for(int i = 0; i < sizeof(a)/sizeof(int); ++i)
 	{
 		InsertBST(&tree,a[i] );
+       // InorderTranverse(tree);
+		//std::cout<<std::endl;
 	}
-    InorderTranverse(tree);
+    //InorderTranverse(tree);
+	PreorderTranverse1(tree);
+	std::cout<<"***************"<<std::endl;
+	PreorderTranverse2(tree);
 	std::cout<<std::endl;
 	return 0;
 }
