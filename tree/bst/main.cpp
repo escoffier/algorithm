@@ -7,6 +7,7 @@
 
 #include<iostream>
 #include<stack>
+#include<queue>
 using namespace std;
 
 struct node
@@ -14,6 +15,7 @@ struct node
 	node *lchild;
 	node *rchild;
 	int data;
+	bool rvisited; //post-order use this flag
 };
 
 bool SearchBST(node* head, int element, node **result)
@@ -100,6 +102,30 @@ bool InsertBST(node **tree, int value)
 	return true;
 }
 
+void LevelTranverse(node *head)
+{
+    queue<node *> q;
+	q.push(head);
+
+	while(!q.empty())
+	{
+		head = q.front();
+		std::cout<<head->data<<std::endl;
+
+		q.pop();
+
+		if(NULL != head->lchild)
+		{
+			q.push(head->lchild);
+		}
+
+	    if(NULL != head->rchild)
+		{
+			q.push(head->rchild);
+		}
+	}
+
+}
 //void InorderTranverse(node *head)
 //{
 //	if(head == NULL)
@@ -110,6 +136,46 @@ bool InsertBST(node **tree, int value)
 //}
 
 #if 1
+void PostorderTranverse1(node *head)
+{
+   stack<node*> s;
+   while(NULL != head || !s.empty())
+   {
+	   while(NULL != head)
+	   {
+		   head->rvisited = false;
+		   s.push(head);
+		   head = head->lchild;
+	   }
+
+	   if(!s.empty())
+	   {
+		   head = s.top();
+           
+		   if(NULL == head->rchild)
+		   {
+			   std::cout<<"leaf node: "<<head->data<<std::endl;
+			   s.pop();
+			   head = head->rchild;
+			   continue;
+		   }
+
+           if(head->rvisited)
+		   {
+			   std::cout<<head->data<<std::endl;
+			   s.pop();
+			   head = NULL;
+	       }
+		   else
+		   {
+			   head->rvisited = true;
+			   head = head->rchild;
+		   }
+	   }
+   }
+   std::cout<<std::endl;
+}
+
 void PreorderTranverse1(node *head)
 {
 	stack<node *> s;
@@ -122,7 +188,6 @@ void PreorderTranverse1(node *head)
 			head = head->lchild;
 		}
         else
-		//if(!s.empty())
 		{
 			head = s.top();
 			s.pop();
@@ -204,7 +269,8 @@ void printarray(int a[], int size)
 }
 int main(int argc, char** argv)
 {
-	int a[] = {14, 13, 10, 8, 7, 6, 4 , 3, 1};
+	//int a[] = {14, 13, 10, 8, 7, 6, 4 , 3, 1};
+	int a[] = {14, 10, 13, 1, 7, 6, 4 , 3, 8};
 	node* tree = NULL;
     for(int i = 0; i < sizeof(a)/sizeof(int); ++i)
 	{
@@ -212,10 +278,12 @@ int main(int argc, char** argv)
        // InorderTranverse(tree);
 		//std::cout<<std::endl;
 	}
-    //InorderTranverse(tree);
-	PreorderTranverse1(tree);
+    InorderTranverse(tree);
+	//PreorderTranverse1(tree);
 	std::cout<<"***************"<<std::endl;
-	PreorderTranverse2(tree);
-	std::cout<<std::endl;
+	LevelTranverse(tree);
+	//PreorderTranverse2(tree);
+    std::cout<<"post-order"<<std::endl;
+	PostorderTranverse1(tree);
 	return 0;
 }
