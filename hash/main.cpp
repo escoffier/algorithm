@@ -78,12 +78,18 @@ int main(int argc, char **argv)
 {
     const int hashA = 1;
     const int hashB = 2;
-    const char * str[4] = {"name", "robbie", "sorry", "a"};
-    MPQHASHTABLE table[4];
-    for(int i = 0; i < 4; ++i)
+    const int SIZE = 5;
+    const char * str[SIZE] = {"name", "robbie", "sorry", "a", "color"};
+    MPQHASHTABLE table[5];
+    for(int i = 0; i < SIZE; ++i)
     {
-        int hashpos = HashString(str[i], HASH_OFFSET)%4;
+        table[i].bExists = false;
+    }
+    for(int i = 0; i < SIZE; ++i)
+    {
+        int hashpos = HashString(str[i], HASH_OFFSET)%SIZE;
         int startpos = hashpos;
+        std::cout<<str[i]<<"----"<<startpos<<std::endl;
         while(1)
         {
             if(table[hashpos].bExists == false)
@@ -97,7 +103,7 @@ int main(int argc, char **argv)
             }
             else
             {
-                hashpos = (hashpos+1)%4;
+                hashpos = (hashpos+1)%SIZE;
                 if(hashpos == startpos)
                 {
                     std::cout<<"no space for "<<str[i]<<std::endl;
