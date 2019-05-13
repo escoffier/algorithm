@@ -142,6 +142,11 @@ void PostorderTranverse1(node *head) {
   std::cout << std::endl;
 }
 
+// Pre-order (NLR)
+// 1. Check if the current node is empty or null.
+// 2. Display the data part of the root (or current node).
+// 3. Traverse the left subtree by recursively calling the pre-order function.
+// 4. Traverse the right subtree by recursively calling the pre-order function.
 void PreorderTranverse1(node *head) {
   stack<node *> s;
   while (head != NULL || !s.empty()) {
@@ -183,6 +188,10 @@ void PreorderTranverse2(node *head) {
   std::cout << std::endl;
 }
 
+// Check if the current node is empty or null.
+// Traverse the left subtree by recursively calling the in-order function.
+// Display the data part of the root (or current node).
+// Traverse the right subtree by recursively calling the in-order function.
 void InorderTranverse(node *head) {
   if (NULL == head) {
     std::cout << "empty tree" << std::endl;
